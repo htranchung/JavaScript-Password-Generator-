@@ -1,27 +1,12 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-var lowCase = [
-  "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
-];
-
-var upCase = [
-  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-];
-var num = [
-  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
-];
-
-var specialChar = [
-  "!", "@", "#", "$", "^", "%", "&", ",", "*", "+", "-", ".", "/", "<", ">", "?", "~"
-];
-
-//1. prompts for password criteria
-//    A. Password length 8 < 128
-//    b. lowercase,uppercase,numbers,special characters
-//2. validate the input
-//3. generate password based on criteria 
-
+var passwordCharacters = {
+  num: "1234567890",
+  specialChar: "!@#$%&'()*+,^-./:;<=>?[]_`{~}|",
+  lowerCase: "abcdefghijklmnopqrstuvwxyz",
+  upperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+};
 
 // Write password to the #password input
 function writePassword() {
@@ -37,8 +22,6 @@ var generateButton = document.getElementById("generateBtn");
 generateBtn.addEventListener("click", writePassword);
 
 function generatePassword() {
-  var passInfo = "";
-  var passChar = [];
 
   var length = prompt('How many characters would you like your password to contain?');
 
@@ -60,34 +43,31 @@ function generatePassword() {
     return null;
   }
 
+  var passInfo = "";
+
   if (numbers) {
-    console.log("There is a number");
-    passInfo = passInfo + num;
-    passChars.push(getRandomChar(num));
+    passInfo = passInfo + passwordCharacters.num;
   }
 
   if (lowerCases) {
-    console.log("There is a lowercase");
-    passInfo = passInfo + lowCase;
-    passChars.push(getRandomChar(lowCase));
+    passInfo = passInfo + passwordCharacters.lowerCase;
   }
 
   if (upperCases) {
-    console.log("There is a uppercase");
-    passInfo = passInfo + upCase;
-    passChars.push(getRandomChar(upCase));
+    passInfo = passInfo + passwordCharacters.upperCase;
   }
 
   if (specialCharacters) {
-    console.log("There is a special character");
-    passInfo = passInfo + specialChar;
-    passChars.push(getRandomChar(specialChar));
+    passInfo = passInfo + passwordCharacters.specialChar;
   }
 
+  var randomPassword = "";
 
+  for (var i = 0; i < length; i++) {
+    randomPassword += passInfo[Math.floor(Math.random() * passInfo.length)];
+  };
 
-
-
+  return randomPassword;
 }
 
 
