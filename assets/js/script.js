@@ -42,30 +42,50 @@ function generatePassword() {
   }
 
   var passInfo = "";
+  var randomPassword = "";
 
   if (numbers) {
     passInfo = passInfo + passwordCharacters.num;
+    randomPassword += passwordCharacters.num[Math.floor(Math.random() * passwordCharacters.num.length)];
+    length--;
   }
 
   if (lowerCases) {
     passInfo = passInfo + passwordCharacters.lowerCase;
+    randomPassword += passwordCharacters.lowerCase[Math.floor(Math.random() * passwordCharacters.lowerCase.length)];
+    length--;
   }
 
   if (upperCases) {
     passInfo = passInfo + passwordCharacters.upperCase;
+    randomPassword += passwordCharacters.upperCase[Math.floor(Math.random() * passwordCharacters.upperCase.length)];
+    length--;
   }
 
   if (specialCharacters) {
     passInfo = passInfo + passwordCharacters.specialChar;
+    randomPassword += passwordCharacters.specialChar[Math.floor(Math.random() * passwordCharacters.specialChar.length)];
+    length--;
   }
-
-  var randomPassword = "";
 
   for (var i = 0; i < length; i++) {
     randomPassword += passInfo[Math.floor(Math.random() * passInfo.length)];
   };
 
-  return randomPassword;
+  randomPassword = randomPassword.split("");
+
+  var shuffled = randomPassword
+    .map(function (value) {
+      return { value, sort: Math.random() };
+    })
+    .sort(function (a, b) {
+      return a.sort - b.sort;
+    })
+    .map(function({ value }) {
+      return value;
+    });
+
+  shuffled = shuffled.join("");
+
+  return shuffled;
 }
-
-
